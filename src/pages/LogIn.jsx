@@ -5,6 +5,9 @@ import { FaUserAlt, FaKey } from 'react-icons/fa'
 
 import '../styles/Login.css'
 
+// const URL = 'http://192.168.59.28:1234';
+const URL = 'https://server-backend-production.up.railway.app'
+
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -14,7 +17,7 @@ const Login = () => {
         event.preventDefault();
         const data = { username: username, password: password }
 
-        fetch('http://192.168.59.28:1234/login', {
+        fetch(`${URL}/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

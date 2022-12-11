@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import Vite from './Vite'
 
+// const URL = 'http://192.168.59.28:1234';
+const URL = 'https://server-backend-production.up.railway.app'
+
 function findIndex(data, value) {
     for (let i = 0; i < data.length; i++) {
         if (data[i].includes(`${value}`)) {
@@ -23,7 +26,7 @@ const Dashboard = () => {
         var token = findIndex(cookie, 'token');
         setName(findIndex(cookie, 'name'))
 
-        fetch('http://192.168.59.28:1234/test', {
+        fetch(`${URL}/test`, {
             method: 'POST',
             headers: {
                 'authorization': token
