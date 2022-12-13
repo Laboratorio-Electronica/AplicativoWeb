@@ -5,6 +5,7 @@ import { FaUserAlt, FaKey } from 'react-icons/fa'
 
 import '../styles/Login.css'
 
+// const URL = 'http://localhost:1234'
 // const URL = 'http://192.168.59.28:1234';
 const URL = 'https://server-backend-production.up.railway.app'
 
@@ -29,6 +30,7 @@ const Login = () => {
                 // console.log(cred)
                 document.cookie = `token=${cred.token}; max-age=${60*60}; path=/;samesite=strict`;
                 document.cookie = `name=${cred.name}; max-age=${60*60}; path=/;samesite=strict`;
+                // localStorage.setItem('name', cred.name)
                 console.log(document.cookie.split(';'))
                 if (cred.token !== 'noToken') {
                     setStatus(true)

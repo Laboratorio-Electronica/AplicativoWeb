@@ -14,9 +14,9 @@ const Header = () => {
         <div className='header-container'>
             <img src={logo} alt="Logo" className='header-logo' />
             <ul className='header-items'>
-                <li className='selected'>Dashboard</li>
-                <li>Records</li>
-                <li>Spare parts</li>
+                <li><a href="/">Dashboard</a></li>
+                <li><a href="/records">Records</a></li>
+                {/* <li>Spare parts</li> */}
             </ul>
             <div>
                 <button onClick={() => setUser(!user)}>

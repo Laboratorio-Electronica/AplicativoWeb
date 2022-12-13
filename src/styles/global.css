@@ -27,7 +27,8 @@ html{
 
 a {
   font-weight: 500;
-  color: #646cff;
+  /* color: #646cff; */
+  color: black;
   text-decoration: inherit;
 }
 a:hover {
