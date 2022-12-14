@@ -17,6 +17,7 @@
 
 .login-form{
     width: var(--size-form);
+    min-width: 32rem;
     height: 100vh;
     display: flex;
     flex-direction: column;
