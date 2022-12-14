@@ -13,28 +13,68 @@ const columns = [
         selector: row => row.day,
         // sortable: true,
         // sortFunction: caseInsensitiveSort
+        center: true,
+        minWidth: '5.2rem',
+        compact: true
     },
     {
         name: 'Hour',
         selector: row => row.hour,
         // sortable: true
+        center: true,
+        compact: true,
+        minWidth: '6.4rem'
+
     },
-    {
-        name: 'Ubiety',
-        selector: row => row.ubiety,
-        // sortable: true
-    },
+    // {
+    //     name: 'Ubiety',
+    //     selector: row => row.ubiety,
+    //     // sortable: true
+    // },
     {
         name: 'Temperature',
         selector: row => `${row.temperature}°C`,
         // sortable: true
+        center: true,
+        compact: true,
+        minWidth: '10rem'
+
+
     },
     {
         name: 'Humidity',
         selector: row => `${row.humidity}%`,
         // sortable: true
+        center: true,
+        compact: true,
+        minWidth: '8rem'
+
     },
 ];
+
+const customStyles = {
+    rows: {
+        style: {
+            // minHeight: '72px', // override the row height
+            // width: '100px',
+
+        },
+    },
+    headCells: {
+        style: {
+            paddingLeft: '8px', // override the cell padding for head cells
+            paddingRight: '8px',
+            // background: 'red'
+            // width: '1px'
+        },
+    },
+    cells: {
+        style: {
+            paddingLeft: '8px', // override the cell padding for data cells
+            paddingRight: '8px',
+        },
+    },
+};
 
 const paginationComponentOptions = {
     noRowsPerPage: false,
@@ -60,11 +100,27 @@ const Records = () => {
     
     data.sort((a, b) => a.day - b.day)
 
+    var dataWarehouse = []
+    var dataLaboratory = []
+
+    // console.log(data)
+    data.map(element => {
+        if (element.ubiety === "laboratory") {
+            dataLaboratory.push(element)
+        }
+        if (element.ubiety === "warehouse") {
+            dataWarehouse.push(element)
+        }
+    })
+
+    // console.log('Laboratory',dataLaboratory)
+    // console.log('Warehouse',dataWarehouse)
+
     const conditionalRowStyles = [
         {
-            when: row => row.temperature < 15,
+            when: row => row.temperature < 0,
             style: {
-                backgroundColor: 'rgba(63, 195, 128, 0.9)',
+                backgroundColor: '#618af2',
                 color: 'white',
                 '&:hover': {
                     cursor: 'pointer',
@@ -72,17 +128,17 @@ const Records = () => {
             },
         },
         {
-            when: row => row.temperature >= 15 && row.temperature < 25,
+            when: row => row.temperature >= 50,
             style: {
-                backgroundColor: 'rgba(248, 148, 6, 0.9)',
+                backgroundColor: 'rgba(242, 38, 19, 0.9)',
                 color: 'white',
                 '&:hover': {
-                    cursor: 'pointer',
+                    cursor: 'not-allowed',
                 },
             },
         },
         {
-            when: row => row.temperature >= 25,
+            when: row => row.humidity > 80,
             style: {
                 backgroundColor: 'rgba(242, 38, 19, 0.9)',
                 color: 'white',
@@ -113,16 +169,32 @@ const Records = () => {
             </div>
             <div className="container-table" id="table-data">
                 <div className="table-title">
-                    <DataTable
-                        title = "Registro de temperatura ambiental y humedad relativa"
-                        theme='default'
-                        columns={columns}
-                        data={data}
-                        // selectableRows
-                        pagination
-                        paginationComponentOptions={paginationComponentOptions}
-                        // conditionalRowStyles={conditionalRowStyles}
-                    />
+                    <div className='table'>
+                        <DataTable
+                            title = "Laboratory"
+                            theme='default'
+                            columns={columns}
+                            data={dataLaboratory}
+                            // selectableRows
+                            pagination
+                            paginationComponentOptions={paginationComponentOptions}
+                            conditionalRowStyles={conditionalRowStyles}
+                            // customStyles={customStyles}
+                        />
+                    </div>
+                    <div className='table'>
+                        <DataTable
+                            title = "Warehouse"
+                            theme='default'
+                            columns={columns}
+                            data={dataWarehouse}
+                            // selectableRows
+                            pagination
+                            paginationComponentOptions={paginationComponentOptions}
+                            conditionalRowStyles={conditionalRowStyles}
+                            customStyles={customStyles}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

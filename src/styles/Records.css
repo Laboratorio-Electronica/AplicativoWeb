@@ -1,4 +1,13 @@
 .table-title{
-    width: 70%;
-    margin: 0 auto;
+    width: 95%;
+    margin: 10px auto;
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.table{
+    width: max-content;
 }
