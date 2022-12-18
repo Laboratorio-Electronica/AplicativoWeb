@@ -8,7 +8,7 @@
 .login-frontPage{
     width: calc(100% - var(--size-form));
     height: 100vh;
-    background-image: url('../assets/frontPage.jpeg');
+    background-image: url('../../assets/frontPage.jpeg');
     background-size: cover;
     background-position: center;
     border: none;
@@ -55,6 +55,7 @@
     font-size: 2rem;
     margin: 0 1rem;
     /* background-color: var(--color-button); */
+    color: white;
 }
 
 .form-input input{
