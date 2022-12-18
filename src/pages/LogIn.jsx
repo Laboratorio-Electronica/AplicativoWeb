@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import { FaUserAlt, FaKey } from 'react-icons/fa'
+import generateToken from '../modules/token'
 
 import '../styles/pages/Login.css'
 
 import Logo from '../assets/Logo.png'
 
-// const URL = 'http://localhost:1234'
-const URL = 'https://server-backend-production.up.railway.app'
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -15,18 +14,10 @@ const Login = () => {
     
     function submitCredentials(event) {
         event.preventDefault();
-        const data = { username: username, password: password }
-    
-        fetch(`${URL}/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ user: data })
-        }).then(res => res.json()).then(cred => {
+        generateToken(username, password).then(res => res.json()).then(cred => {
             document.cookie = `token=${cred.token}; max-age=${60*60}; path=/;samesite=strict`;
             document.cookie = `name=${cred.name}; max-age=${60*60}; path=/;samesite=strict`;
-            console.log(document.cookie.split(';'))
+            document.cookie = `role=${cred.role}; max-age=${60*60}; path=/;samesite=strict`;
             if (cred.token !== 'noToken') {
                 setStatus(true)
                 window.location.href = '/';

@@ -4,11 +4,19 @@
 
 .container-welcome{
     width: 95%;
-    height: 95vh;
+    height: 85vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 0 auto;
     text-align: center;
     padding: 2rem;
+    gap: 10rem;
+    /* background-color: aqua; */
+}
+
+.container-welcome button{
+    color: white;
+    font-size: 3rem;
 }
