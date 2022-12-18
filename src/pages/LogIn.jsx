@@ -5,8 +5,8 @@ import '../styles/pages/Login.css'
 
 import Logo from '../assets/Logo.png'
 
-const URL = 'http://localhost:1234'
-// const URL = 'https://server-backend-production.up.railway.app'
+// const URL = 'http://localhost:1234'
+const URL = 'https://server-backend-production.up.railway.app'
 
 const Login = () => {
     const [username, setUsername] = useState('');
