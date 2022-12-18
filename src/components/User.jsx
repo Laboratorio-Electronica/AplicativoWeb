@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import '../styles/User.css'
+import '../styles/components/User.css'
 
 const User = () => {
     return (

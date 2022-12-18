@@ -1,28 +1,43 @@
 import React, { useEffect, useState } from 'react'
-import logo from '../assets/Logo.png'
-
 import User from '../components/User'
-
-import '../styles/Header.css'
+import Menu from '../components/Menu'
 
 import { FaUserCog } from "react-icons/fa";
+import { AiOutlineMenu } from "react-icons/ai"
+import logo from '../assets/Logo.png'
+
+import '../styles/components/Header.css'
 
 const Header = () => {
-    const [user, setUser] = useState(false)
+    const [popupUser, setPopupUser] = useState(false)
+    const [popupMenu, setPopupMenu] = useState(false)
 
     return (
         <div className='header-container'>
             <img src={logo} alt="Logo" className='header-logo' />
-            <ul className='header-items'>
-                <li><a href="/">Dashboard</a></li>
-                <li><a href="/records">Records</a></li>
-                {/* <li>Spare parts</li> */}
-            </ul>
-            <div>
-                <button onClick={() => setUser(!user)}>
-                    <FaUserCog className='icon'/>
+
+            <div className='header-items'>
+                <Menu />
+            </div>
+
+            <div className='header-menu'>
+                <button onClick={() => {
+                    setPopupMenu(!popupMenu)
+                    setPopupUser(false)
+                }}>
+                    <AiOutlineMenu className='header-icon' />
                 </button>
-                {user ? <User /> : ''}
+                {popupMenu ? <div className='header-menu-items'><Menu /></div> : ''}
+            </div>
+
+            <div className='header-user'>
+                <button onClick={() => {
+                    setPopupUser(!popupUser)
+                    setPopupMenu(false)
+                }}>
+                    <FaUserCog className='header-icon'/>
+                </button>
+                {popupUser ? <User /> : ''}
             </div>
         </div>
     )

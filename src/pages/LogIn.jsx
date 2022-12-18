@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
-import Logo from '../assets/Logo.png'
-
 import { FaUserAlt, FaKey } from 'react-icons/fa'
 
-import '../styles/Login.css'
+import '../styles/pages/Login.css'
 
-// const URL = 'http://localhost:1234'
-// const URL = 'http://192.168.59.28:1234';
-const URL = 'https://server-backend-production.up.railway.app'
+import Logo from '../assets/Logo.png'
+
+const URL = 'http://localhost:1234'
+// const URL = 'https://server-backend-production.up.railway.app'
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -17,28 +16,24 @@ const Login = () => {
     function submitCredentials(event) {
         event.preventDefault();
         const data = { username: username, password: password }
-
+    
         fetch(`${URL}/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ user: data })
+        }).then(res => res.json()).then(cred => {
+            document.cookie = `token=${cred.token}; max-age=${60*60}; path=/;samesite=strict`;
+            document.cookie = `name=${cred.name}; max-age=${60*60}; path=/;samesite=strict`;
+            console.log(document.cookie.split(';'))
+            if (cred.token !== 'noToken') {
+                setStatus(true)
+                window.location.href = '/';
+            } else {
+                setStatus(false)
+            }
         })
-            .then(res => res.json())
-            .then(cred => {
-                // console.log(cred)
-                document.cookie = `token=${cred.token}; max-age=${60*60}; path=/;samesite=strict`;
-                document.cookie = `name=${cred.name}; max-age=${60*60}; path=/;samesite=strict`;
-                // localStorage.setItem('name', cred.name)
-                console.log(document.cookie.split(';'))
-                if (cred.token !== 'noToken') {
-                    setStatus(true)
-                    window.location.href = '/';
-                } else {
-                    setStatus(false)
-                }
-            })
     }
 
     return (
