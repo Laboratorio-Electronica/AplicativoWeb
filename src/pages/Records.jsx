@@ -13,7 +13,7 @@ const Records = () => {
     var dataLaboratory = []
 
     const [data, setData] = useState([])
-    const [month, setMonth] = useState('Aug')
+    const [month, setMonth] = useState('Jan')
     const [year, setYear] = useState(22)
 
     useEffect(() => {
@@ -29,11 +29,19 @@ const Records = () => {
             <Header />
             <div className='records-container'>
                 <select name="month" id="month" onChange={e => setMonth(e.target.value)}>
+                    <option value={"Jan"}>Enero</option>
+                    <option value={"Feb"}>Febrero</option>
+                    <option value={"Mar"}>Marzo</option>
+                    <option value={"Apr"}>Abril</option>
+                    <option value={"May"}>Mayo</option>
+                    <option value={"Jun"}>Junio</option>
+                    <option value={"Jul"}>Julio</option>
                     <option value={"Aug"}>Agosto</option>
                     <option value={"Sep"}>Septiembre</option>
                     <option value={"Oct"}>Octubre</option>
                     <option value={"Nov"}>Noviembre</option>
                     <option value={"Dec"}>Diciembre</option>
+
                 </select>
                 <select name="year" id="year" onChange={e => setYear(e.target.value)}>
                     <option value={22}>2022</option>
