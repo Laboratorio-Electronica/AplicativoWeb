@@ -14,7 +14,7 @@ const Records = () => {
 
     const [data, setData] = useState([])
     const [month, setMonth] = useState('Jan')
-    const [year, setYear] = useState(22)
+    const [year, setYear] = useState(23)
 
     useEffect(() => {
         fetch(API + month + year)
@@ -44,8 +44,8 @@ const Records = () => {
 
                 </select>
                 <select name="year" id="year" onChange={e => setYear(e.target.value)}>
-                    <option value={22}>2022</option>
                     <option value={23}>2023</option>
+                    <option value={22}>2022</option>
                 </select>
             </div>
             <div className="container-table" id="table-data">
