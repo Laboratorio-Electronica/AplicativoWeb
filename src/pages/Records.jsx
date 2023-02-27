@@ -1,16 +1,43 @@
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component';
-import selectData, { columns, paginationComponentOptions, conditionalRowStyles } from '../modules/tableConfig'
+import selectData, {
+    columns,
+    paginationComponentOptions,
+    conditionalRowStyles
+} from '../modules/tableConfig'
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+import annotationPlugin from 'chartjs-plugin-annotation';
 
 import Header from '../components/Header'
 
 import '../styles/pages/Records.css'
 
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+    annotationPlugin
+);
+
 const API = "https://60fqd2g261.execute-api.us-east-1.amazonaws.com/records/";
 
 const Records = () => {
-    var dataWarehouse = []
-    var dataLaboratory = []
+    const dataWarehouse = []
+    const dataLaboratory = []
 
     const [data, setData] = useState([])
     const [month, setMonth] = useState('Jan')
@@ -24,9 +51,76 @@ const Records = () => {
 
     selectData(data, dataLaboratory, dataWarehouse)
 
+    // console.log(dataLaboratory)
+
+    const dataID = [];
+    const dataTemperatureValue = []
+
+    function dataForGraphic() {
+        dataLaboratory.forEach(data => {
+            dataID.push(data.id)
+            dataTemperatureValue.push(parseInt(data.temperature))
+        })
+    }
+
+    dataForGraphic()
+
+    // console.log('data temperatura' + dataTemperatureValue)
+    // console.log('id' + dataID)
+
+    const dataGraphic = {
+        // labels: ['USA', 'Mexico', 'Italia', 'Colombia', 'Espana'],
+        labels: dataID,
+        datasets: [{
+            label: 'habitantes',
+            backgroundColor: "red",
+            borderColor: 'black',
+            borderWidth: 1,
+            hoverBackgroundColor: "green",
+            hoverBorderColor: 'white',
+            // data: [327.4, 23.7, 54.7, 32, 76]
+            data: dataTemperatureValue,
+        }]
+    };
+    const optionsGraphic = {
+        maintainAspectRatio: false,
+        responsive: true,
+        scales: {
+            y: {
+                min: 0
+            },
+        },
+        plugins: {
+            legend: {
+                position: "top"
+            },
+            title: {
+                display: true,
+                text: "Chart.js Line Chart"
+            },
+            annotation: {
+                annotations: {
+                    line: {
+                        // Indicates the type of annotation
+                        type: "box",
+                        //   xMin: 1,
+                        //   xMax: 2,
+                        yMin: 20,
+                        //   yMax: 40,
+                        backgroundColor: "rgba(255, 99, 132, 0.25)"
+                    }
+                }
+            }
+        }
+    }
+    const plugins = {
+        
+    }
+
     return (
         <div>
             <Header />
+
             <div className='records-container'>
                 <select name="month" id="month" onChange={e => setMonth(e.target.value)}>
                     <option value={"Jan"}>Enero</option>
@@ -71,6 +165,9 @@ const Records = () => {
                             paginationComponentOptions={paginationComponentOptions}
                             conditionalRowStyles={conditionalRowStyles}
                         />
+                    </div>
+                    <div style={{width: "100%", height: "50rem"}}>
+                        <Line data={dataGraphic} options={optionsGraphic} />
                     </div>
                 </div>
             </div>
