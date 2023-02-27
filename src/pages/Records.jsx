@@ -53,33 +53,60 @@ const Records = () => {
 
     // console.log(dataLaboratory)
 
-    const dataID = [];
-    const dataTemperatureValue = []
 
-    function dataForGraphic() {
-        dataLaboratory.forEach(data => {
-            dataID.push(data.id)
-            dataTemperatureValue.push(parseInt(data.temperature))
+    function dataForGraphic(data) {
+        const temperatureValue = [];
+        const humidityValue = [];
+        const ID = [];
+        data.forEach(element => {
+            ID.push(element.day)
+            temperatureValue.push(parseInt(element.temperature))
+            humidityValue.push(parseInt(element.humidity))
         })
+    return [temperatureValue, humidityValue, ID]
     }
 
-    dataForGraphic()
+    let dataIDLaboratory;
+    let dataTemperatureLaboratory
+    let dataHumidityLaboratory
+    [dataTemperatureLaboratory, dataHumidityLaboratory, dataIDLaboratory] = dataForGraphic(dataLaboratory)
+    
+    let dataIDWarehouse;
+    let dataTemperatureWarehouse
+    let dataHumidityWarehouse
+    [dataTemperatureWarehouse, dataHumidityWarehouse, dataIDWarehouse] = dataForGraphic(dataWarehouse)
+    // dataIDWarehouse = dataIDLaboratory
+
+    // console.log(dataForGraphic(dataWarehouse))
+    // console.log(dataForGraphic(dataLaboratory))
 
     // console.log('data temperatura' + dataTemperatureValue)
     // console.log('id' + dataID)
 
+    // console.log('Laboratorio' + dataIDLaboratory)
+    // console.log('Bodega' + dataIDWarehouse)
+
     const dataGraphic = {
         // labels: ['USA', 'Mexico', 'Italia', 'Colombia', 'Espana'],
-        labels: dataID,
+        labels: dataIDWarehouse,
         datasets: [{
-            label: 'habitantes',
-            backgroundColor: "red",
+            label: 'Laboratory',
+            backgroundColor: "blue",
             borderColor: 'black',
             borderWidth: 1,
-            hoverBackgroundColor: "green",
+            hoverBackgroundColor: "black",
+            hoverBorderColor: 'white',
+            data: dataTemperatureLaboratory
+        },
+        {
+            label: 'Warehouse',
+            backgroundColor: "gray",
+            borderColor: 'black',
+            borderWidth: 1,
+            hoverBackgroundColor: "white",
             hoverBorderColor: 'white',
             // data: [327.4, 23.7, 54.7, 32, 76]
-            data: dataTemperatureValue,
+            data: dataTemperatureWarehouse
         }]
     };
     const optionsGraphic = {
