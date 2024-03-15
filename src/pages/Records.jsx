@@ -14,9 +14,21 @@ import {
     Title,
     Tooltip,
     Legend,
+    BarElement
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import annotationPlugin from 'chartjs-plugin-annotation';
+
+// import {
+//     Chart as ChartJS,
+//     CategoryScale,
+//     LinearScale,
+//     BarElement,
+//     Title,
+//     Tooltip,
+//     Legend,
+//   } from 'chart.js';
+  import { Bar } from 'react-chartjs-2';
 
 import Header from '../components/Header'
 
@@ -33,20 +45,29 @@ ChartJS.register(
     annotationPlugin
 );
 
-const API = "https://60fqd2g261.execute-api.us-east-1.amazonaws.com/records/";
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const API = "https://api-production-3f4e.up.railway.app/thermohygrometer/";
 
 const Records = () => {
     const dataWarehouse = []
     const dataLaboratory = []
 
     const [data, setData] = useState([])
-    const [month, setMonth] = useState('Jan')
-    const [year, setYear] = useState(23)
+    const [month, setMonth] = useState('Mar')
+    const [year, setYear] = useState(24)
 
     useEffect(() => {
         fetch(API + month + year)
             .then(res => res.json())
-            .then(data => setData(data.Items))
+            .then(data => setData(data.content))
     }, [month, year])
 
     selectData(data, dataLaboratory, dataWarehouse)
@@ -144,6 +165,39 @@ const Records = () => {
         
     }
 
+    const options = {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Chart.js Bar Chart',
+          },
+        },
+      };
+
+      const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+      const dataBar = {
+        labels,
+        datasets: [
+          {
+            label: 'Dataset 1',
+          //   data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+            data: [100, 875, 231, 345, 345, 565, 323],
+            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+          },
+          {
+            label: 'Dataset 2',
+          //   data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+          data: [10, 375, 631, 325, 145, 535, 623],
+            backgroundColor: 'rgba(53, 162, 235, 0.5)',
+          },
+        ],
+      };
+
     return (
         <div>
             <Header />
@@ -152,7 +206,7 @@ const Records = () => {
                 <select name="month" id="month" onChange={e => setMonth(e.target.value)}>
                     <option value={"Jan"}>Enero</option>
                     <option value={"Feb"}>Febrero</option>
-                    <option value={"Mar"}>Marzo</option>
+                    <option value={"Mar"} selected>Marzo</option>
                     <option value={"Apr"}>Abril</option>
                     <option value={"May"}>Mayo</option>
                     <option value={"Jun"}>Junio</option>
@@ -165,8 +219,8 @@ const Records = () => {
 
                 </select>
                 <select name="year" id="year" onChange={e => setYear(e.target.value)}>
-                    <option value={23}>2023</option>
-                    <option value={22}>2022</option>
+                    <option value={24}>2024</option>
+                    {/* <option value={22}>2022</option> */}
                 </select>
             </div>
             <div className="container-table" id="table-data">
@@ -195,6 +249,7 @@ const Records = () => {
                     </div>
                     <div style={{width: "100%", height: "50rem"}}>
                         <Line data={dataGraphic} options={optionsGraphic} />
+                        <Bar options={optionsGraphic} data={dataGraphic} />;
                     </div>
                 </div>
             </div>
