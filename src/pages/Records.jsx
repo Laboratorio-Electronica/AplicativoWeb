@@ -54,7 +54,7 @@ ChartJS.register(
   Legend
 );
 
-const API = "https://api-production-3f4e.up.railway.app/thermohygrometer/";
+const API = "https://true-nut-production.up.railway.app/thermohygrometer/";
 
 const Records = () => {
     const dataWarehouse = []
