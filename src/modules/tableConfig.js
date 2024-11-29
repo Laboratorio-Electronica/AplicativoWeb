@@ -70,7 +70,7 @@ const conditionalRowStyles = [
 
 const selectData = (data, dataLaboratory, dataWarehouse) => {
     data.map(element => {
-        element.id = element.time
+        element.id = element.id
         element.hour = element.date.split(' ')[1]
         element.day = element.date.split(' ')[0].split('-')[0]
     })
