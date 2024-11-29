@@ -54,14 +54,14 @@ ChartJS.register(
   Legend
 );
 
-const API = "https://true-nut-production.up.railway.app/thermohygrometer/";
+const API = "http://localhost:9090/thermohygrometer/";
 
 const Records = () => {
     const dataWarehouse = []
     const dataLaboratory = []
 
     const [data, setData] = useState([])
-    const [month, setMonth] = useState('Mar')
+    const [month, setMonth] = useState('Sep')
     const [year, setYear] = useState(24)
 
     useEffect(() => {
@@ -80,7 +80,7 @@ const Records = () => {
         const humidityValue = [];
         const ID = [];
         data.forEach(element => {
-            ID.push(element.day)
+            ID.push(element.date)
             temperatureValue.push(parseInt(element.temperature))
             humidityValue.push(parseInt(element.humidity))
         })
@@ -206,13 +206,13 @@ const Records = () => {
                 <select name="month" id="month" onChange={e => setMonth(e.target.value)}>
                     <option value={"Jan"}>Enero</option>
                     <option value={"Feb"}>Febrero</option>
-                    <option value={"Mar"} selected>Marzo</option>
+                    <option value={"Mar"}>Marzo</option>
                     <option value={"Apr"}>Abril</option>
                     <option value={"May"}>Mayo</option>
                     <option value={"Jun"}>Junio</option>
                     <option value={"Jul"}>Julio</option>
                     <option value={"Aug"}>Agosto</option>
-                    <option value={"Sep"}>Septiembre</option>
+                    <option value={"Sep"} selected>Septiembre</option>
                     <option value={"Oct"}>Octubre</option>
                     <option value={"Nov"}>Noviembre</option>
                     <option value={"Dec"}>Diciembre</option>
@@ -225,7 +225,7 @@ const Records = () => {
             </div>
             <div className="container-table" id="table-data">
                 <div className="table-title">
-                    <div className='table'>
+                    {/* <div className='table'>
                         <DataTable
                             title = "Laboratory"
                             theme='default'
@@ -235,21 +235,21 @@ const Records = () => {
                             paginationComponentOptions={paginationComponentOptions}
                             conditionalRowStyles={conditionalRowStyles}
                         />
-                    </div>
-                    <div className='table'>
-                        <DataTable
-                            title = "Warehouse"
-                            theme='default'
-                            columns={columns}
-                            data={dataWarehouse}
-                            pagination
-                            paginationComponentOptions={paginationComponentOptions}
-                            conditionalRowStyles={conditionalRowStyles}
-                        />
-                    </div>
+                    </div> */}
+                        {/* <div className='table'>
+                            <DataTable
+                                title = "Warehouse"
+                                theme='default'
+                                columns={columns}
+                                data={dataWarehouse}
+                                pagination
+                                paginationComponentOptions={paginationComponentOptions}
+                                conditionalRowStyles={conditionalRowStyles}
+                            />
+                        </div> */}
                     <div style={{width: "100%", height: "50rem"}}>
                         <Line data={dataGraphic} options={optionsGraphic} />
-                        <Bar options={optionsGraphic} data={dataGraphic} />;
+                        {/* <Bar options={optionsGraphic} data={dataGraphic} />; */}
                     </div>
                 </div>
             </div>
