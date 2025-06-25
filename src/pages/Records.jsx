@@ -54,15 +54,15 @@ ChartJS.register(
   Legend
 );
 
-const API = "http://localhost:9090/thermohygrometer/";
+const API = "http://192.168.1.100:9090/thermohygrometer/";
 
 const Records = () => {
     const dataWarehouse = []
     const dataLaboratory = []
 
     const [data, setData] = useState([])
-    const [month, setMonth] = useState('Sep')
-    const [year, setYear] = useState(24)
+    const [month, setMonth] = useState('Feb')
+    const [year, setYear] = useState(25)
 
     useEffect(() => {
         fetch(API + month + year)
@@ -107,7 +107,7 @@ const Records = () => {
     // console.log('Laboratorio' + dataIDLaboratory)
     // console.log('Bodega' + dataIDWarehouse)
 
-    const dataGraphic = {
+    const dataGraphicTemperature = {
         // labels: ['USA', 'Mexico', 'Italia', 'Colombia', 'Espana'],
         labels: dataIDWarehouse,
         datasets: [{
@@ -130,7 +130,30 @@ const Records = () => {
             data: dataTemperatureWarehouse
         }]
     };
-    const optionsGraphic = {
+    const dataGraphicHumidity = {
+        // labels: ['USA', 'Mexico', 'Italia', 'Colombia', 'Espana'],
+        labels: dataIDWarehouse,
+        datasets: [{
+            label: 'Laboratory',
+            backgroundColor: "blue",
+            borderColor: 'black',
+            borderWidth: 1,
+            hoverBackgroundColor: "black",
+            hoverBorderColor: 'white',
+            data: dataHumidityLaboratory
+        },
+        {
+            label: 'Warehouse',
+            backgroundColor: "gray",
+            borderColor: 'black',
+            borderWidth: 1,
+            hoverBackgroundColor: "white",
+            hoverBorderColor: 'white',
+            // data: [327.4, 23.7, 54.7, 32, 76]
+            data: dataHumidityWarehouse
+        }]
+    };
+    const optionsGraphicTemperature = {
         maintainAspectRatio: false,
         responsive: true,
         scales: {
@@ -144,7 +167,7 @@ const Records = () => {
             },
             title: {
                 display: true,
-                text: "Chart.js Line Chart"
+                text: "Grafica de temperatura"
             },
             annotation: {
                 annotations: {
@@ -153,7 +176,38 @@ const Records = () => {
                         type: "box",
                         //   xMin: 1,
                         //   xMax: 2,
-                        yMin: 20,
+                        yMin: 25,
+                        //   yMax: 40,
+                        backgroundColor: "rgba(255, 99, 132, 0.25)"
+                    }
+                }
+            }
+        }
+    }
+    const optionsGraphicHumidity = {
+        maintainAspectRatio: false,
+        responsive: true,
+        scales: {
+            y: {
+                min: 0
+            },
+        },
+        plugins: {
+            legend: {
+                position: "top"
+            },
+            title: {
+                display: true,
+                text: "Grafica de humedad"
+            },
+            annotation: {
+                annotations: {
+                    line: {
+                        // Indicates the type of annotation
+                        type: "box",
+                        //   xMin: 1,
+                        //   xMax: 2,
+                        yMin: 58,
                         //   yMax: 40,
                         backgroundColor: "rgba(255, 99, 132, 0.25)"
                     }
@@ -205,21 +259,21 @@ const Records = () => {
             <div className='records-container'>
                 <select name="month" id="month" onChange={e => setMonth(e.target.value)}>
                     <option value={"Jan"}>Enero</option>
-                    <option value={"Feb"}>Febrero</option>
+                    <option value={"Feb"} selected>Febrero</option>
                     <option value={"Mar"}>Marzo</option>
                     <option value={"Apr"}>Abril</option>
                     <option value={"May"}>Mayo</option>
                     <option value={"Jun"}>Junio</option>
                     <option value={"Jul"}>Julio</option>
                     <option value={"Aug"}>Agosto</option>
-                    <option value={"Sep"} selected>Septiembre</option>
+                    <option value={"Sep"} >Septiembre</option>
                     <option value={"Oct"}>Octubre</option>
                     <option value={"Nov"}>Noviembre</option>
                     <option value={"Dec"}>Diciembre</option>
 
                 </select>
                 <select name="year" id="year" onChange={e => setYear(e.target.value)}>
-                    <option value={24}>2024</option>
+                    <option value={25}>2025</option>
                     {/* <option value={22}>2022</option> */}
                 </select>
             </div>
@@ -247,8 +301,9 @@ const Records = () => {
                                 conditionalRowStyles={conditionalRowStyles}
                             />
                         </div> */}
-                    <div style={{width: "100%", height: "50rem"}}>
-                        <Line data={dataGraphic} options={optionsGraphic} />
+                    <div style={{width: "50%", height: "50rem", display: "flex", justifyContent: "center", alignItems: "center"}}>
+                        <Line data={dataGraphicTemperature} options={optionsGraphicTemperature} />
+                        <Line data={dataGraphicHumidity} options={optionsGraphicHumidity} />
                         {/* <Bar options={optionsGraphic} data={dataGraphic} />; */}
                     </div>
                 </div>
